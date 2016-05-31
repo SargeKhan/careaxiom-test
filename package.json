@@ -1,0 +1,21 @@
+{
+  "name": "careaxiom-test",
+  "version": "1.0.0",
+  "description": "control flow strategies",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "sargekhan <usmankhen@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1"
+  },
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
