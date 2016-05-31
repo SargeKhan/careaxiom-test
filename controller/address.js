@@ -3,4 +3,4 @@ module.exports = function(app) {
     var address = req.query.address;
     res.status(200).send();
   });
-}
+};
