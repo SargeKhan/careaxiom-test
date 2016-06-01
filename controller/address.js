@@ -43,18 +43,21 @@ function fetchTitle(url, respondCallback){
 module.exports = function(app) {
   app.get("/I/want/title/", function(req, res){
     var addresses = getAddressArray(req.query.address);
-    totalRequests = addresses.length;
-    requestsCompleted = 0;
+    if(addresses != null){
+      totalRequests = addresses.length;
+      requestsCompleted = 0;
 
-    console.log("Addresses: ", addresses);
-    titleArray = [];
-    for(address in addresses){
-      fetchTitle(addresses[address], function(){
-        console.log("Title Array: ", resultArray);
-        return res.render("index", {
-          result: resultArray
+      console.log("Addresses: ", addresses);
+      titleArray = [];
+      for(address in addresses){
+        fetchTitle(addresses[address], function(){
+          return res.render("index", {
+            result: resultArray
+          });
         });
-      });
+      }
+    }else {
+      return res.render("index");
     }
   });
 
