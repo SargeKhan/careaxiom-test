@@ -8,7 +8,7 @@ var request = require("request");
 chai.use(chaiHttp);
 
 describe("address", function(){
-  this.timeout(15000);
+  this.timeout(25000);
   it("should return the title of google", function(done){
     chai.request(server)
     .get("/I/want/title/?address=http://google.com")
@@ -37,13 +37,11 @@ describe("address", function(){
     .get("/I/want/title/?address=http://google.com&address=http://facebook.com")
     .end(function(err, res){
       res.should.have.status(200);
-      console.log(res.text);
       $ = cheerio.load(res.text);
       $("li").each(function(i, elem){
-        console.log("Element: ", elem);
-        var titleGoogle = elem.indexOf("Google");
-        var titleFacebook = elem.indexOf("Google");
-        var titleGorF = containsGoogle || containsFacebook;
+        var titleGoogle = $(this).text().indexOf("Google");
+        var titleFacebook = $(this).text().indexOf("Facebook");
+        var titleGorF = (titleGoogle != -1) || (titleFacebook != -1);
         titleGorF.should.not.equal(false);
       });
       done();

@@ -48,7 +48,6 @@ module.exports = function(app) {
 
       console.log("Addresses: ", addresses);
       async.map(addresses, fetchTitle, function(error, result){
-        console.log("Server:", result);
         return res.render("index", {
           result: result
         });
