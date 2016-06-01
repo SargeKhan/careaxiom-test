@@ -42,15 +42,20 @@ function fetchTitle(url, respondCallback){
 module.exports = function(app) {
   app.get("/I/want/title/", function(req, res){
     var addresses = getAddressArray(req.query.address);
-    totalRequests = addresses.length;
-    requestsCompleted = 0;
+    if(addresses!=null){
+      totalRequests = addresses.length;
+      requestsCompleted = 0;
 
-    console.log("Addresses: ", addresses);
-    async.map(addresses, fetchTitle, function(error, result){
+      console.log("Addresses: ", addresses);
+      async.map(addresses, fetchTitle, function(error, result){
+        console.log("Server:", result);
         return res.render("index", {
           result: result
         });
       });
+    }else{
+      res.render("index");
+    }
   });
 
   app.get("*", function(req, res){
