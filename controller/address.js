@@ -1,6 +1,7 @@
 var request = require("request");
 var cheerio = require("cheerio");
 var _ = require("underscore");
+var async = require("async");
 
 var totalRequests = 0;
 var requestsCompleted = 0;
@@ -24,19 +25,17 @@ function fetchTitle(url, respondCallback){
     requestsCompleted++;
     if(!error){
       var $ = cheerio.load(html);
-      resultArray.push({
+      var resultElement ={
         url:url,
         title: $("title").text()
-      });
+      };
+      respondCallback(null, resultElement);
     } else {
-      resultArray.push({
+      var resultElement = {
         url: url,
-        title:"unable to fetch title from resource"});
+        title:"unable to fetch title from resource"};
+      respondCallback(null, resultElement);
     }
-    if(requestsCompleted >= totalRequests) { 
-      respondCallback();
-    };
-
   });
 }
 
@@ -47,15 +46,11 @@ module.exports = function(app) {
     requestsCompleted = 0;
 
     console.log("Addresses: ", addresses);
-    titleArray = [];
-    for(address in addresses){
-      fetchTitle(addresses[address], function(){
-        console.log("Title Array: ", resultArray);
+    async.map(addresses, fetchTitle, function(error, result){
         return res.render("index", {
-          result: resultArray
+          result: result
         });
       });
-    }
   });
 
   app.get("*", function(req, res){
