@@ -39,7 +39,6 @@ describe("address", function(){
       res.should.have.status(200);
       $ = cheerio.load(res.text);
       $("li").each(function(i, elem){
-        console.log(this);
         var titleGoogle = $(this).text().indexOf("Google");
         var titleFacebook = $(this).text().indexOf("Facebook");
         var titleGorF = (titleGoogle != -1) || (titleFacebook != -1);
