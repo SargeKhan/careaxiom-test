@@ -11,6 +11,7 @@ describe("address", function(){
     .get("/I/want/title/?address=google.com")
     .end(function(err, res){
       res.should.have.status(200);
+      done();
     });
   });
   it("should return default render page without title", function(done){
@@ -18,6 +19,7 @@ describe("address", function(){
     .get("/I/want/title/?address=google.com")
     .end(function(err, res){
       res.should.have.status(200);
+      done();
     });
   });
   it("should return title of google, facebook page", function(done){
@@ -25,6 +27,7 @@ describe("address", function(){
     .get("/I/want/title/?address=google.com")
     .end(function(err, res){
       res.should.have.status(200);
+      done();
     });
   });
 });
